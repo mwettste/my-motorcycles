@@ -18,6 +18,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x' # required for now, since we are targetting azure functions 3.0 (should be unnecessary when going from .net5 to .net6)
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
