@@ -20,6 +20,6 @@ Enjoy browsing through them :)
 
     private async Task CallAzureFunction()
     {
-        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles");
+        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles?name=General Kenobi");
     }
 }
