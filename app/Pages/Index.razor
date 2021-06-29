@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject HttpClient httpClient
 
 <h1>Hello, there!</h1>
 
@@ -8,3 +9,17 @@ Enjoy browsing through them :)
 </p>
 
 🏍️
+
+<br />
+
+<button class="btn btn-primary" @onclick="CallAzureFunction">Test Azure Function</button>
+<p>Message: @FunctionValue</p>
+
+@code {
+    private string FunctionValue {get;set;} = string.Empty;
+
+    private async Task CallAzureFunction()
+    {
+        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles");
+    }
+}
