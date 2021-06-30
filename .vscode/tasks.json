@@ -29,7 +29,7 @@
             }
         },
         {
-            "label": "build",
+            "label": "ApiBuild",
             "command": "dotnet",
             "args": [
                 "build",
@@ -37,14 +37,37 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "type": "process",
-            "dependsOn": "clean",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
             "problemMatcher": "$msCompile",
             "options": {
                 "cwd": "${workspaceFolder}/api"
+            }
+        },
+        {
+            "label": "ClientBuild",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "type": "process",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/app"
+            },
+            "dependsOn": [
+                "ApiBuild"
+            ]
+        },
+        {
+            "label": "Build",
+            "dependsOn": [
+                "ClientBuild"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
