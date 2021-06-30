@@ -1,7 +1,7 @@
 ﻿@page "/"
-@inject HttpClient httpClient
+@inject AuthenticationStateProvider authStateProvider
 
-<h1>Hello, there!</h1>
+<h1>Hello there, @userName!</h1>
 
 <p>
 This page will eventually contain an overview of all the motorcyles I (used to) own!
@@ -10,16 +10,12 @@ Enjoy browsing through them :)
 
 🏍️
 
-<br />
-
-<button class="btn btn-primary" @onclick="CallAzureFunction">Test Azure Function</button>
-<p>Message: @FunctionValue</p>
-
 @code {
-    private string FunctionValue {get;set;} = string.Empty;
-
-    private async Task CallAzureFunction()
+    private string userName = string.Empty;
+    protected override async Task OnInitializedAsync()
     {
-        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles?name=General Kenobi");
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        userName = user.Identity.IsAuthenticated ? user.Identity.Name : "General Kenobi";
     }
 }
