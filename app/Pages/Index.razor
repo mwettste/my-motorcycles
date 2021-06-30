@@ -1,7 +1,13 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider authStateProvider
 
-<h1>Hello there, @userName!</h1>
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello there, @context.User.Identity.Name!</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Hello there, anonymous!</h1>
+    </NotAuthorized>
+</AuthorizeView>
 
 <p>
 This page will eventually contain an overview of all the motorcyles I (used to) own!
@@ -9,13 +15,3 @@ Enjoy browsing through them :)
 </p>
 
 🏍️
-
-@code {
-    private string userName = string.Empty;
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await authStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        userName = user.Identity.IsAuthenticated ? user.Identity.Name : "General Kenobi";
-    }
-}
