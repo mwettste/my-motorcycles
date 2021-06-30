@@ -1,0 +1,20 @@
+@page "/admin-dashboard"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "admin")]
+@inject HttpClient httpClient
+
+<h1>Sample Admin Dashboard</h1>
+
+<br />
+
+<button class="btn btn-primary" @onclick="CallAzureFunction">Test Azure Function</button>
+<p>Message: @FunctionValue</p>
+
+@code {
+    private string FunctionValue {get;set;} = string.Empty;
+
+    private async Task CallAzureFunction()
+    {
+        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles?name=General Kenobi");
+    }
+}
