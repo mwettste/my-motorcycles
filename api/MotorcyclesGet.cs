@@ -11,7 +11,7 @@ using shared;
 
 namespace ch.wettsti
 {
-    public static class Motorcycles
+    public static class MotorcyclesGet
     {
         private static readonly List<MotorcycleDto> MotorcycleList = new List<MotorcycleDto>
         {
@@ -20,9 +20,9 @@ namespace ch.wettsti
             new MotorcycleDto() { Make = "KTM", Model = "450 EXC Six Days", BuildYear = 2012, KmWhenBought = 0, KmNow = 0, BoughtInYear = new DateTime(2016, 04, 02), SoldInYear = null, UpdateDate = new DateTime(2021, 06, 30, 21, 34, 00) }
         };
 
-        [FunctionName("motorcycles")]
+        [FunctionName("motorcycles-get")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "GetMotorcycles")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");

@@ -8,13 +8,13 @@
 <br />
 
 <button class="btn btn-primary" @onclick="CallAzureFunction">Test Azure Function</button>
-<p>Message: @FunctionValue</p>
+<p>Message: @FunctionResponse</p>
 
 @code {
-    private string FunctionValue {get;set;} = string.Empty;
+    private string FunctionResponse {get;set;} = string.Empty;
 
     private async Task CallAzureFunction()
     {
-        FunctionValue = await httpClient.GetStringAsync("/api/motorcycles?name=General Kenobi");
+        FunctionResponse = await httpClient.GetStringAsync("/api/getmotorcycles");
     }
 }
