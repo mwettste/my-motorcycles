@@ -1,4 +1,6 @@
 ﻿@page "/"
+@inject HttpClient httpClient
+@using System.Text.Json
 
 <AuthorizeView>
     <Authorized>
@@ -15,3 +17,36 @@ Enjoy browsing through them :)
 </p>
 
 🏍️
+
+<br />
+<br />
+
+<button class="btn btn-primary" @onclick="RequestMotorcycles">Get Motorcycles</button>
+
+<br />
+<br />
+
+<ul>
+    @if (motorcycles != null)
+    {
+        foreach (var moto in motorcycles)
+        {
+            <li>
+                @moto.Make - @moto.Model - @moto.BuildYear
+            </li>
+        }   
+    }
+</ul>
+
+@code {
+    private List<MotorcycleDto> motorcycles;
+
+    private async Task RequestMotorcycles()
+    {
+        var response = await httpClient.GetStringAsync("/api/motorcycles");
+        if (!string.IsNullOrEmpty(response))
+        {
+            motorcycles = JsonSerializer.Deserialize<List<MotorcycleDto>>(response);
+        }
+    }
+}
